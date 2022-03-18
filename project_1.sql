@@ -1,5 +1,5 @@
-/* Vytvoøení primární tabulky slouící jako datovı podklad pro testování vızkumnıch otázek - 
- * vyuívám virtuálních pomocnıch tabulek cen potravin a mezd v daném odvìtví */
+/* VytvoÃ¸enÃ­ primÃ¡rnÃ­ tabulky slouÅ¾Ã­cÃ­ jako datovÃ½ podklad pro testovÃ¡nÃ­ vÃ½zkumnÃ½ch otÃ¡zek - 
+ * vyuÅ¾Ã­vÃ¡m virtuÃ¡lnÃ­ch pomocnÃ½ch tabulek cen potravin a mezd v danÃ©m odvÃ¬tvÃ­ */
 
 CREATE OR REPLACE TABLE t_tomas_weber_project_SQL_primary_final AS
 WITH price_table AS (
@@ -13,7 +13,7 @@ WITH price_table AS (
 	FROM czechia_price cp
 	JOIN czechia_price_category cpc 
 		ON cp.category_code = cpc.code
-	WHERE cp.region_code IS NULL 		/* hodnoty v jednotlivıch krajích nás aktuálnì nezajímají */ 
+	WHERE cp.region_code IS NULL 		/* hodnoty v jednotlivÃ½ch krajÃ­ch nÃ¡s aktuÃ¡lnÃ¬ nezajÃ­majÃ­ */ 
 	GROUP BY 
 		food_name, cpc.price_value, cpc.code, cpc.price_unit, year_of_measurement	
 	), 
@@ -45,21 +45,21 @@ SELECT
 FROM price_table pc
 JOIN wage_table wt
 	ON pc.year_of_measurement = wt.payroll_year
-JOIN economies e /*Spárování s tabulkou, kde je uvedeno GDP */
+JOIN economies e /*SpÃ¡rovÃ¡nÃ­ s tabulkou, kde je uvedeno GDP */
 	ON year_of_measurement = e.`year` 
 	AND e.country = 'Czech republic'
 ORDER BY pc.year_of_measurement;
 
---- Vızkumné otázky ---
+--- VÃ½zkumnÃ© otÃ¡zky ---
 
-/* 1) Rostou v prùbìhu let mzdy ve všech odvìtvích, nebo v nìkterıch klesají? 
+/* 1) Rostou v prÃ¹bÃ¬hu let mzdy ve vÅ¡ech odvÃ¬tvÃ­ch, nebo v nÃ¬kterÃ½ch klesajÃ­? 
  * 
- * Odpovìï: 
+ * OdpovÃ¬Ã¯: 
  * 
- * V nìkterıch odvìtvích mzdy vícekrát klesaly - napøíklad v oblasti tìby mzdy klesly v období 2008 - 2015 meziroènì 4x.
- * Vìtšinu meziroèních poklesù ve mzdách lze sledovat v letech 2008 - 2012 - finanèní krize
+ * V nÃ¬kterÃ½ch odvÃ¬tvÃ­ch mzdy vÃ­cekrÃ¡t klesaly - napÃ¸Ã­klad v oblasti tÃ¬Å¾by mzdy klesly v obdobÃ­ 2008 - 2015 meziroÃ¨nÃ¬ 4x.
+ * VÃ¬tÅ¡inu meziroÃ¨nÃ­ch poklesÃ¹ ve mzdÃ¡ch lze sledovat v letech 2008 - 2012 - finanÃ¨nÃ­ krize
  * 
- * SQL dotaz níe
+ * SQL dotaz nÃ­Å¾e
  */
 
 WITH t1 AS (
@@ -93,15 +93,15 @@ JOIN t2
 WHERE t2.average_wage_per_industry_branch < t1.average_wage_per_industry_branch
 ORDER BY t1.industry_branch_name, year1;
 
-/* 2) Kolik je moné si koupit litrù mléka a kilogramù chleba 
- *	za první a poslední srovnatelné období v dostupnıch datech cen a mezd?
+/* 2) Kolik je moÅ¾nÃ© si koupit litrÃ¹ mlÃ©ka a kilogramÃ¹ chleba 
+ *	za prvnÃ­ a poslednÃ­ srovnatelnÃ© obdobÃ­ v dostupnÃ½ch datech cen a mezd?
  *
- * Odpovìï: 
+ * OdpovÃ¬Ã¯: 
  *
- * V roce 2006 bylo moné z prùmìrné mzdy koupit 1262 kg chleba, zatímco v roce 2018 1320 kg.
- * V roce 2006 bylo moné z prùmìrné mzdy koupit 1409 litrù mléka, zatímco v roce 2018 1614 litrù.
+ * V roce 2006 bylo moÅ¾nÃ© z prÃ¹mÃ¬rnÃ© mzdy koupit 1262 kg chleba, zatÃ­mco v roce 2018 1320 kg.
+ * V roce 2006 bylo moÅ¾nÃ© z prÃ¹mÃ¬rnÃ© mzdy koupit 1409 litrÃ¹ mlÃ©ka, zatÃ­mco v roce 2018 1614 litrÃ¹.
  
- * SQL níe
+ * SQL nÃ­Å¾e
  */ 
 
 WITH t1 AS (
@@ -112,7 +112,7 @@ WITH t1 AS (
 		AVG(average_wage_per_industry_branch) AS average_wage_2006
 	FROM t_tomas_weber_project_SQL_primary_final  
 	WHERE 
-		food_name in ('Chléb konzumní kmínovı', 'Mléko polotuèné pasterované') 
+		food_name in ('ChlÃ©b konzumnÃ­ kmÃ­novÃ½', 'MlÃ©ko polotuÃ¨nÃ© pasterovanÃ©') 
 		AND year_of_measurement = 2006
 	GROUP BY 
 		food_name, average_food_price, year_of_measurement
@@ -125,7 +125,7 @@ t2 AS (
 		AVG(average_wage_per_industry_branch) AS average_wage_2018
 	FROM t_tomas_weber_project_SQL_primary_final  
 	WHERE 
-		food_name in ('Chléb konzumní kmínovı', 'Mléko polotuèné pasterované') 
+		food_name in ('ChlÃ©b konzumnÃ­ kmÃ­novÃ½', 'MlÃ©ko polotuÃ¨nÃ© pasterovanÃ©') 
 		AND year_of_measurement = 2018
 	GROUP BY 
 		food_name, average_food_price, year_of_measurement
@@ -142,12 +142,12 @@ FROM t1
 JOIN t2
 	ON t1.food_name = t2.food_name;
 
-/* 3) Která kategorie potravin zdrauje nejpomaleji (je u ní nejniší percentuální meziroèní nárùst)?
+/* 3) KterÃ¡ kategorie potravin zdraÅ¾uje nejpomaleji (je u nÃ­ nejniÅ¾Å¡Ã­ percentuÃ¡lnÃ­ meziroÃ¨nÃ­ nÃ¡rÃ¹st)?
  * 
- * Odpovìï: Nejménì v prùbìhu sledovaného období meziroènì zdrauje cukr. Ten naopak v dlouhodobém horizontu spíše zlevòuje.
- * SQL níe */
+ * OdpovÃ¬Ã¯: NejmÃ©nÃ¬ v prÃ¹bÃ¬hu sledovanÃ©ho obdobÃ­ meziroÃ¨nÃ¬ zdraÅ¾uje cukr. Ten naopak v dlouhodobÃ©m horizontu spÃ­Å¡e zlevÃ²uje.
+ * SQL nÃ­Å¾e */
 
---- Pomocné view, slouící pozdìji k vıpoètu prùmìrného meziroèního procentuálního nárustu cen potravin ---
+--- PomocnÃ© view, slouÅ¾Ã­cÃ­ pozdÃ¬ji k vÃ½poÃ¨tu prÃ¹mÃ¬rnÃ©ho meziroÃ¨nÃ­ho procentuÃ¡lnÃ­ho nÃ¡rustu cen potravin ---
 
 CREATE OR REPLACE VIEW v_tomas_weber_price_increase AS 
 WITH t1 AS (
@@ -184,16 +184,16 @@ FROM v_tomas_weber_price_increase
 GROUP BY food_name
 ORDER BY AVG(diff_in_percent);
 
-/* 4) Existuje rok, ve kterém byl meziroèní nárùst cen potravin vıraznì vyšší ne rùst mezd (vìtší ne 10 %)?
+/* 4) Existuje rok, ve kterÃ©m byl meziroÃ¨nÃ­ nÃ¡rÃ¹st cen potravin vÃ½raznÃ¬ vyÅ¡Å¡Ã­ neÅ¾ rÃ¹st mezd (vÃ¬tÅ¡Ã­ neÅ¾ 10 %)?
  * 
- * Odpovìï: 
+ * OdpovÃ¬Ã¯: 
  * 
- * Ve sledovaném období se nestalo, e by byl nárust cen potravin meziroènì o 10 % vìtší ne nárùst mezd.
- * Nejblíe tomu byl meziroèní nárùst cen z období 2012 / 2013, kdy došlo k poklesu prùmìrnıch mezd, 
- * ale ceny potravin se zvıšily o více jak 5 %. 
- * K absolutnì nejvyššímu meziroènímu nárùstu ceny potravin došlo v období 2016 / 2017 - 9,63 % (zvıšily se ovšem mzdy o 6,4 %)
+ * Ve sledovanÃ©m obdobÃ­ se nestalo, Å¾e by byl nÃ¡rust cen potravin meziroÃ¨nÃ¬ o 10 % vÃ¬tÅ¡Ã­ neÅ¾ nÃ¡rÃ¹st mezd.
+ * NejblÃ­Å¾e tomu byl meziroÃ¨nÃ­ nÃ¡rÃ¹st cen z obdobÃ­ 2012 / 2013, kdy doÅ¡lo k poklesu prÃ¹mÃ¬rnÃ½ch mezd, 
+ * ale ceny potravin se zvÃ½Å¡ily o vÃ­ce jak 5 %. 
+ * K absolutnÃ¬ nejvyÅ¡Å¡Ã­mu meziroÃ¨nÃ­mu nÃ¡rÃ¹stu ceny potravin doÅ¡lo v obdobÃ­ 2016 / 2017 - 9,63 % (zvÃ½Å¡ily se ovÅ¡em mzdy o 6,4 %)
  * 
- * SQL níe */
+ * SQL nÃ­Å¾e */
 
 WITH t1 AS (
 	SELECT 
@@ -220,26 +220,26 @@ JOIN t2
 	ON t1.year_of_measurement_1 = t2.year_of_measurement_2 - 1	
 WHERE (t2.average_food_price_2  - t1.average_food_price_1) / t1.average_food_price_1 * 100 > (t2.average_wage_2  - t1.average_wage_1) / t1.average_wage_1 * 100;
 
-/* Ve WHERE klauzuli vıše vybírám øádky (roky), ve kterıch došlo k vìtšímu nárustu cen potravin ne platù. 
- * Alternativa - pokud chci najít rok, ve kterém potraviny zdraily o více jak 10 % (zadání pro mì není jednoznaèné), vyuiji:
- * WHERE (t2.average_food_price_2  - t1.average_food_price_1) / t1.average_food_price_1 * 100 > 10; == Takovı pøípad nenastal
+/* Ve WHERE klauzuli vÃ½Å¡e vybÃ­rÃ¡m Ã¸Ã¡dky (roky), ve kterÃ½ch doÅ¡lo k vÃ¬tÅ¡Ã­mu nÃ¡rustu cen potravin neÅ¾ platÃ¹. 
+ * Alternativa - pokud chci najÃ­t rok, ve kterÃ©m potraviny zdraÅ¾ily o vÃ­ce jak 10 % (zadÃ¡nÃ­ pro mÃ¬ nenÃ­ jednoznaÃ¨nÃ©), vyuÅ¾iji:
+ * WHERE (t2.average_food_price_2  - t1.average_food_price_1) / t1.average_food_price_1 * 100 > 10; == TakovÃ½ pÃ¸Ã­pad nenastal
  */
 
 
-/*  5) Má vıška HDP vliv na zmìny ve mzdách a cenách potravin? Neboli, pokud HDP vzroste vıraznìji v jednom roce, 
- * projeví se to na cenách potravin èi mzdách ve stejném nebo násdujícím roce vıraznìjším rùstem? 
+/*  5) MÃ¡ vÃ½Å¡ka HDP vliv na zmÃ¬ny ve mzdÃ¡ch a cenÃ¡ch potravin? Neboli, pokud HDP vzroste vÃ½raznÃ¬ji v jednom roce, 
+ * projevÃ­ se to na cenÃ¡ch potravin Ã¨i mzdÃ¡ch ve stejnÃ©m nebo nÃ¡sdujÃ­cÃ­m roce vÃ½raznÃ¬jÅ¡Ã­m rÃ¹stem? 
  *
- * Odpovìï: 
+ * OdpovÃ¬Ã¯: 
  * 
- * Není to jednoznaèné. Pokud HDP roste vıraznìji (napø. meziroènì o více ne 3 %), vìtšinou lze sledovat i vıraznìjší nárùst mezd.
- * Co je nicménì zajímavé, ve sledovaném období došlo k nárùstu mezd vdy, a to i pøi stagnaci nebo sníení HDP. 
- * Ceny potravin sice vìtšinou meziroènì stoupají, ale korelace cen potravin a HDP zcela jistì není tak vysoká jako korelace mezd a HDP.
- * Lze to vidìt napøíklad v letech, kdy došlo k meziroèní stagnaci nebo poklesu HDP - ceny potravin jednou klesají, jindy nicménì stoupají, a to i velmi vıraznì.
- * To ukazuje, e do cen potravin z velké míry vstupují externí faktory - napø. úroda v daném roce
+ * NenÃ­ to jednoznaÃ¨nÃ©. Pokud HDP roste vÃ½raznÃ¬ji (napÃ¸. meziroÃ¨nÃ¬ o vÃ­ce neÅ¾ 3 %), vÃ¬tÅ¡inou lze sledovat i vÃ½raznÃ¬jÅ¡Ã­ nÃ¡rÃ¹st mezd.
+ * Co je nicmÃ©nÃ¬ zajÃ­mavÃ©, ve sledovanÃ©m obdobÃ­ doÅ¡lo k nÃ¡rÃ¹stu mezd vÅ¾dy, a to i pÃ¸i stagnaci nebo snÃ­Å¾enÃ­ HDP. 
+ * Ceny potravin sice vÃ¬tÅ¡inou meziroÃ¨nÃ¬ stoupajÃ­, ale korelace cen potravin a HDP zcela jistÃ¬ nenÃ­ tak vysokÃ¡ jako korelace mezd a HDP.
+ * Lze to vidÃ¬t napÃ¸Ã­klad v letech, kdy doÅ¡lo k meziroÃ¨nÃ­ stagnaci nebo poklesu HDP - ceny potravin jednou klesajÃ­, jindy nicmÃ©nÃ¬ stoupajÃ­, a to i velmi vÃ½raznÃ¬.
+ * To ukazuje, Å¾e do cen potravin z velkÃ© mÃ­ry vstupujÃ­ externÃ­ faktory - napÃ¸. Ãºroda v danÃ©m roce
  * 
- * SQL níe */
+ * SQL nÃ­Å¾e */
 
---- vytvoøení pomocného VIEW pro následnı vıpoèet meziroèních rocentuálních rozdílù v platech, GDP a cenách potravin ---
+--- vytvoÃ¸enÃ­ pomocnÃ©ho VIEW pro nÃ¡slednÃ½ vÃ½poÃ¨et meziroÃ¨nÃ­ch rocentuÃ¡lnÃ­ch rozdÃ­lÃ¹ v platech, GDP a cenÃ¡ch potravin ---
 
 CREATE OR REPLACE VIEW v_tomas_weber_GDP_salary_price_comparison AS 
 	WITH t1 AS (
@@ -270,7 +270,7 @@ WHERE GDP_year_before IS NOT NULL
 ORDER BY (GDP - GDP_year_before) / GDP*100 DESC;
 
 
---- Níe dodateènı materiál: tabulka s HDP, GINI koeficientem a populací dalších evropskıch státù ve stejném období, jako primární pøehled pro ÈR. ---
+--- NÃ­Å¾e dodateÃ¨nÃ½ materiÃ¡l: tabulka s HDP, GINI koeficientem a populacÃ­ dalÅ¡Ã­ch evropskÃ½ch stÃ¡tÃ¹ ve stejnÃ©m obdobÃ­, jako primÃ¡rnÃ­ pÃ¸ehled pro ÃˆR. ---
 
 CREATE OR REPLACE TABLE t_tomas_weber_project_SQL_secondary_final AS (
 	SELECT 
@@ -284,11 +284,11 @@ CREATE OR REPLACE TABLE t_tomas_weber_project_SQL_secondary_final AS (
 		`year` IN (
 			SELECT 
 				DISTINCT year_of_measurement 
-			FROM t_tomas_weber_project_SQL_primary_final) /* stejné období jako pøehled pro ÈR vıše */
+			FROM t_tomas_weber_project_SQL_primary_final) /* stejnÃ© obdobÃ­ jako pÃ¸ehled pro ÃˆR vÃ½Å¡e */
 		AND country IN (
 			SELECT 
 				DISTINCT country 
 			FROM countries 
-			WHERE continent = 'Europe') /* Vıbìr pouze státù, v tabulce economies jsou toti i celé oblasti dohromady */
+			WHERE continent = 'Europe') /* VÃ½bÃ¬r pouze stÃ¡tÃ¹, v tabulce economies jsou totiÅ¾ i celÃ© oblasti dohromady */
 	ORDER BY `year`, GDP DESC
 	);
