@@ -1,7 +1,6 @@
-# SQL_project_1_engeto
-SQL Project (MariaDB) - Availability of Basic Foodstuffs Based on the Average Wages between 2006 - 2018 in Czech Republic.
+# SQL Project (MariaDB) - Availability of Basic Foodstuffs Based on the Average Wages between 2006 - 2018 in Czech Republic.
 
-Výzkumné otázky:
+### Výzkumné otázky:
 
 1) Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
 2) Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední srovnatelné období v dostupných datech cen a mezd?
@@ -9,7 +8,7 @@ Výzkumné otázky:
 4) Existuje rok, ve kterém byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %)?
 5) Má výška vliv na změny ve mzdách a cenách potravin? Neboli, pokud HDP vzroste výrazněji v jednom roce, projeví se to na cenách potravin či mzdách ve stejném nebo násdujícím roce výraznějším růstem?
 
-Odpovědi:
+### Odpovědi:
 
 1) V některých odvětvích mzdy vícekrát klesaly - například v oblasti těžby mzdy klesly v období 2008 - 2015 meziročně 4x. Většinu meziročních poklesů ve mzdách lze sledovat v letech 2008 - 2012 - finanční krize.
 2) V roce 2006 bylo možné z průměrné mzdy koupit 1262 kg chleba, zatímco v roce 2018 1320 kg. V roce 2006 bylo možné z průměrné mzdy koupit 1409 litrů mléka, zatímco v roce 2018 1614 litrů.
